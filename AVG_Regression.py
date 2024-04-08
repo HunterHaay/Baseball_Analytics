@@ -41,8 +41,8 @@ if data is not None:
             return player_data
 
     # User-provided player name and year
-    player_name = "Aaron Judge"  # User-provided player name
-    year = 2022                  # User-provided year
+    player_name = "Ryan Braun"  # User-provided player name
+    year = 2008                  # User-provided year
 
     # Search for the player and the year
     player_stats = find_player_stats(player_name, year, data)
@@ -54,7 +54,7 @@ if data is not None:
        
         # Prepare the data for linear regression
         # Extract player's age for each season, assuming the player was 18 in their first season in 2016
-        player_ages = wrc_plus_stats['Season'] - 2016 + 18
+        player_ages = wrc_plus_stats['Season'] 
 
         # Fit the linear regression model
         X = player_ages.values.reshape(-1, 1)  # Age needs to be 2D for the model
