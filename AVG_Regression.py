@@ -41,8 +41,8 @@ if data is not None:
             return player_data
 
     # User-provided player name and year
-    player_name = "Ryan Braun"  # User-provided player name
-    year = 2008                  # User-provided year
+    player_name = input("Enter the name of a baseball player: ")  # User-provided player name
+    year = int(input("Enter a year that player has played: "))                # User-provided year
 
     # Search for the player and the year
     player_stats = find_player_stats(player_name, year, data)
@@ -77,13 +77,13 @@ if data is not None:
         plt.scatter([next_age], predicted_wRC_plus, color='green', label='Predicted wRC+')
 
         # Add titles and labels
-        plt.title('Aging Curve and wRC+ Linear Regression')
+        plt.title('Aging Curve and wRC+ Linear Regression for ' + player_name)
         plt.xlabel('Age')
         plt.ylabel('wRC+')
         plt.legend()
 
         # Save the figure
-        plt_file_path = os.path.join(downloads_folder, 'aaron_judge_predicted_wrc_plus.png')
+        plt_file_path = os.path.join(downloads_folder,  player_name + '_predicted_wrc_plus.png')
         plt.savefig(plt_file_path)
 
         # Show the plot
