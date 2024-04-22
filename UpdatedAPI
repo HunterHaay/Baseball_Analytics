@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Baseball Analytics Sign or Drop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script>
+function predictStats(event) {
+  // Prevent the default form submission
+  event.preventDefault();
+
+  // Retrieve values from the form
+  var playerName = document.getElementById('playerName').value;
+  var yearsToPredict = document.getElementById('yearsToPredict').value;
+
+  // Define the API endpoint URL
+  const apiUrl = 'https://7usfpajfjd.execute-api.us-east-2.amazonaws.com/prod/predict';
+
+  // Make the API call
+  fetch(apiUrl, {
+    method: 'POST',
+    body: JSON.stringify({ playerName: playerName, years: yearsToPredict }), // Adjust these parameters as needed
+    headers: {
+        'Content-Type': 'application/json'
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Handle the response data
+    const img = new Image();
+    img.src = 'data:image/png;base64,' + data.image; // Replace 'data.image' with the correct property from your response
+    document.getElementById('result').innerHTML = '';
+    document.getElementById('result').appendChild(img);
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
+}
+</script>
+</head>
+<body>
+
+<!-- Rest of your HTML -->
+
+<!-- wRC+ Section -->
+<div class="w3-container w3-padding-32" id="projects">
+  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">wRC+</h3>
+  <!-- Modified form: added IDs and changed the event handler -->
+  <form id="predictForm">
+    <input class="w3-input w3-border" type="text" placeholder="Name" required id="playerName" name="Name">
+    <label for="yearsToPredict">Years to predict:</label>
+    <select name="years" id="yearsToPredict">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <div>
+    <button class="w3-button w3-black w3-section" type="button" onclick="predictStats(event)">
+      <i class="fa fa-paper-plane"></i> PREDICT
+    </button>
+    </form>
+  </div>
+  <!-- Div to display the result -->
+  <div id="result"></div>
+</div>
+
+<!-- Rest of your HTML -->
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-16">
+  <p>Powered by <a href="https://www.aws.amazon.com" title="AWS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+</body>
+</html>
